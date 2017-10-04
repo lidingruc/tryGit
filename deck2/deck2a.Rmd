@@ -71,18 +71,14 @@ Source: http://retractionwatch.com/2014/07/01/bad-spreadsheet-merge-kills-depres
 
 ## 如何推广可复制性研究
 
-<div class="columns-2">
 \#1 
 说服研究者 to adopt a reproducible research workflow
-
-<br><br>
 
 \#2
 训练新手 who don’t have any other workflow
 
 ![two prongs](two-pronged-fork.jpg)
 
-</div>
 
 ## 数据分析的可复制性
 
@@ -122,7 +118,7 @@ want a computer to do."
 ![toolkit](toolkit.png)
 </center>
 
-# Demo
+# Git使用示例
 
 ## GitHub的注册和使用
 
@@ -139,34 +135,30 @@ want a computer to do."
 
 ## 克隆一个版本库(repository)
 
-- 进入 RStudio
-
-- 通过File -> New Project
-    - Version Control: Checkout a project from a version control 
-    repository
-    - Git: Clone a project from a repository
-    - Fill in the info:
-        - URL: use HTTPS address
-        - project directory name: 可以创建一个本地文件夹
-        - Create as a subdirectory of: 选择上述文件夹放在本地什么地方
-        
-- 注意: 每个任务或者项目应该有自己的版本库，都放在上述文件夹中.
+- 进入RStudio : File -> New Project 选择 Version Control再选择Git 
+![newproject](np.png)
+ 
+## 克隆一个版本库(repository)
+- 填写一些基本信息:
+    - URL: 你的Git版本库的HTTPS地址
+    - project directory name: 可以创建一个本地文件夹
+    - Create as a subdirectory of: 选择上述文件夹放在本地的路径
+    
+- 注意: 每个任务或者项目应该有自己的版本库，分别放在一定的文件夹中.
 
 ## 冲突的合并
 
 - 在GitHub的web端你可以编辑README文件并且`Commit` ，写上简单的描述.
 
-- 之后, 在RStudio中同样编辑README文件with a different change.
-    - Commit your changes
-    - Try to push -- you'll get an error!
-    - Try pulling
-    - Resolve the merge conflict and then commit and push
+- 之后, 在RStudio中编辑README文件，但改的地方不同.
+    - 确定修改：Commit your changes
+    - 上传版本：Try to push -- you'll get an error!
+    - 下载版本：Try pulling
+    - 解决冲突：Resolve the merge conflict and then commit and push
     
-- As you work in teams you will run into merge conflicts, learning how
-to resolve them properly will be very important.
+- 小组合作时常常出现merge conflicts, 知道如何处理非常重要.
 
-
-# Documenting and reporting
+# 如何使用Rmarkdown
 
 ## R Markdown 
 
@@ -179,101 +171,91 @@ to resolve them properly will be very important.
 **Tip:** Keep the Markdown cheat sheet handy, we'll refer to it often
 as the course progresses.
 
-[Live demo -- follow along]
+[请注意演示过程]
 
-# On to data analysis
+## 数据分析任务
+呈现全球国家的预期寿命(life expectancy)和人均GDP(GDP per capita)之间的关系. Hans Rosling曾经做个一个[TED演讲](https://www.ted.com/talks/hans_rosling_shows_the_best_stats_you_ve_ever_seen#t-1174047)。
 
-## Task
+## 第一步: 创建文件并加载必要的包（packages）
 
-Visualize relationship between life expectancy and GDP per capita in
-2007 in countries. Also make a plot 
+- 下面将使用 `dplyr`包 (用于数据处理 data wrangling) 和
+`ggplot2` (用于作图，visualization) .
 
-## Step 0: Load necessary packages
+- 首先要确保这些包都安装了（installed）.
 
-Packages are the fundamental units of reproducible R code. They include 
-reusable R functions, the documentation that describes how to use them, 
-and sample data.
-
-- In the following exercises we'll use `dplyr` (for data wrangling) and 
-`ggplot2` (for visualization) packages.
-
-- Load these packages in your markdown file
+- 在markdown中加载（Load）这些包:
 
 ```{r message=FALSE}
 library(dplyr)
 library(ggplot2)
 ```
 
-## Step 1: Load data
+## 第二步: 导入数据
 
 ```{r}
 gapminder <- read.csv("https://stat.duke.edu/~mc301/data/gapminder.csv")
 ```
 
-## Step 2: Subset data
+## 第三步: 筛选数据
 
-- Start with the `gapminder` dataset
+- 以`gapminder` 数据集（dataset）开始
 
-- Filter for cases (rows) where year is equal to 2007
+- 选择年份（year）变量等于2007的案例
 
-- Save this new subsetted dataset as `gap07`
+- 将筛选出来的案例存到一个新的数据集`gap07`
 
 ```{r}
 gap07 <- gapminder %>%
   filter(year == 2007)
 ```
 
+## 第四步: 探索和可视化（Explore and visualize）
 
-## Step 2: Explore and visualize
-
-**Task:** Visualize the relationship between `gdpPercap` and `lifeExp`.
+**任务:** 呈现 `gdpPercap` 与`lifeExp`之间的关系.
 
 ```{r, fig.height=4, fig.width=7}
 qplot(x = gdpPercap, y = lifeExp, data = gap07)
 ```
 
-## Step 3: Dig deeper
+## 第五步: 深入分析1
 
-**Task:** Color the points by continent.
+**任务:** 各个大陆的点使用不同的颜色.
 
 ```{r, fig.height=4, fig.width=7}
 qplot(x = gdpPercap, y = lifeExp, color = continent, data = gap07)
 ```
 
-## Step 3: Commit and push all changes
+## 第五步: 深入分析2
 
-- Stage
+**任务:** 在设定点的大小与人口规模成正比.
 
-- Commit (with a message)
+```{r, fig.height=4, fig.width=7}
+qplot(x = gdpPercap, y = lifeExp, color = continent, size = pop,data = gap07)
+```
 
-- Push
+## 第六步:确认修改并上传
 
-# What's next?
+- 选择：Stage
 
-## Update your analysis
+- 确认：Commit (with a message)
 
-What if you wanted to now change your analysis 
+- 上传：Push
 
-- to subset for 1952
+![gitc](gitc.png)
 
-- plot life expectancy (`lifeExp`) vs. population (`pop`)
+## 自己动手试试？
 
-- and size the points by GPD (`gpdPercap`)
-    - hint: add argument `size = gpdPercap` to your plotting code
+如果我们选择1952年的数据进行做一些分析呢？
 
-Once you're done, commit and push all your changes with a meaningful
-message.
+- 选择 1952 的 数据
 
-# Homework
+- 绘制预期寿命 (`lifeExp`) 与人口的散点图(`pop`)
+
+- 点的大小与人均GDP (`gpdPercap`)成正比
+
+- 提示：在code适当位置添加 `size = gpdPercap` 
 
 ## Homework
 
-- Read the following reproducibility case studies:
-    - http://news.sciencemag.org/policy/2015/05/science-retracts-gay-marriage-paper-without-lead-author-s-consent
-    - http://retractionwatch.com/2013/02/01/seizure-study-retracted-after-authors-realize-data-got-terribly-mixed/
-    - http://retractionwatch.com/2014/07/01/bad-spreadsheet-merge-kills-depression-paper-quick-fix-resurrects-it/
-    
-- Read the following paper:
-    - Hadley Wickham. "Tidy data". *Journal of Statistical Software.*
-    August 2014, Volume 59, Issue 10.
-    http://www.jstatsoft.org/v59/i10/paper
+阅读tidydata的介绍
+http://www.jstatsoft.org/v59/i10/paper
