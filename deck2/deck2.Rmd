@@ -126,7 +126,7 @@ knitr::include_graphics("Rstudio2.png")
 ## 预期寿命与经济发展的关系
 
 呈现全球国家的预期寿命(life expectancy)和人均GDP(GDP per capita)之间的关系. Hans Rosling曾经做个一个TED演讲。我们只做一个年份的。
-```{r echo= FALSE, eval= FALSE,message=FALSE}
+```{r eval= FALSE,message=FALSE}
 #library(dplyr)
 library(gganimate)
 library(ggplot2)
@@ -142,68 +142,11 @@ gapminder_plot <- ggplot(gapminder) +
 gganimate(gapminder_plot, convert='gm convert', filename = "gapminder-gganimate.gif")
 ```
 
+## 预期寿命与经济发展的关系
 ```{r, echo=FALSE,out.width = "500px"}
 knitr::include_graphics("gapminder-gganimate.gif")
 ```
 
-
-## 第一步: 创建文件并加载必要的包（packages）
-
-- 下面将使用 `dplyr`包 (用于数据处理 data wrangling) 和
-`ggplot2` (用于作图，visualization) .
-
-- 首先要确保这些包都安装了（installed）.
-
-- 在markdown中加载（Load）这些包:
-
-```{r message=FALSE}
-library(dplyr)
-library(ggplot2)
-```
-
-## 第二步: 导入数据
-
-```{r}
-gapminder <- read.csv("https://stat.duke.edu/~mc301/data/gapminder.csv")
-```
-
-## 第三步: 筛选数据
-
-- 以`gapminder` 数据集（dataset）开始
-
-- 选择年份（year）变量等于2007的案例
-
-- 将筛选出来的案例存到一个新的数据集`gap07`
-
-```{r}
-gap07 <- gapminder %>%
-  filter(year == 2007)
-```
-
-
-## 第四: 探索和可视化（Explore and visualize）
-
-**任务:** 呈现 `gdpPercap` 与`lifeExp`之间的关系.
-
-```{r, fig.height=4, fig.width=7}
-qplot(x = gdpPercap, y = lifeExp, data = gap07)
-```
-
-## 第五步: 深入分析1
-
-**任务:** 各个大陆的点使用不同的颜色.
-
-```{r, fig.height=4, fig.width=7}
-qplot(x = gdpPercap, y = lifeExp, color = continent, data = gap07)
-```
-
-## 第五步: 深入分析2
-
-**任务:** 在设定点的大小与人口规模成正比.
-
-```{r, fig.height=4, fig.width=7}
-qplot(x = gdpPercap, y = lifeExp, color = continent, size = pop,data = gap07)
-```
 
 # R数据分析例子：川普支持度
 
@@ -272,19 +215,6 @@ ggplot(data,aes(dnum, approve, color=who)) +
 - `ggplot2` 中的 `+` 符号可以不断给图形添加图层(layerin)
 
 
-## 自己动手试试？
-
-如果我们选择1952年的数据进行做一些分析呢？
-
-- 选择 1952 的 数据
-
-- 绘制预期寿命 (`lifeExp`) 与人口的散点图(`pop`)
-
-- 点的大小与人均GDP (`gpdPercap`)成正比
-
-- 提示：在code适当位置添加 `size = gpdPercap` 
-  
-  
 # R的学习方法与资料
 
 ## 学习 R 的方法
