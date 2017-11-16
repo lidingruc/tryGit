@@ -212,7 +212,7 @@ ggplot(data,aes(dnum, approve, color=who)) +
 
 - 管道操作符 `%>%` 是`dplyr`中的函数. 将管道的上端的结果作为下一行命令的首个输入元素.
 
-- `ggplot2` 中的 `+` 符号可以不断给图形添加图层(layerin)
+- `ggplot2` 中的 `+` 符号可以不断给图形添加图层(layer)
 
 
 # R的学习方法与资料
